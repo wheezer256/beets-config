@@ -1,0 +1,24 @@
+plugins:
+  - badfiles
+  - bandcamp
+  - chroma
+  - convert
+  - discogs
+  - duplicates
+  - edit
+  - embedart
+  - fetchart
+  - filetote      # pip install beets-filetote
+  - fromfilename
+  - hook
+  - info
+  - lastgenre
+  - lyrics
+  - mbcollection  # <--- Updates your MusicBrainz collection
+  - mbsync
+  - missing
+  - permissions
+  - replaygain
+  - scrub
+  - unimported
+  - web

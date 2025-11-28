@@ -1,0 +1,137 @@
+# ----------------------------------------------------------------------------
+# Beets Main Configuration
+# ----------------------------------------------------------------------------
+
+include:
+  - plugins.yaml
+  - secrets.yaml
+  - local.yaml
+
+# ----------------------------------------------------------------------------
+# Library & Import Settings
+# ----------------------------------------------------------------------------
+import:
+    write: yes
+    copy: yes
+    move: no
+    resume: ask
+    incremental: yes
+    quiet_fallback: skip
+    timid: no
+    # Log path is in local.yaml
+
+# ----------------------------------------------------------------------------
+# Path Structure (A-Z folders without plugin)
+# ----------------------------------------------------------------------------
+paths:
+    # Uses %left{...,1} to get the first letter, and %upper to capitalize it.
+    # Result: "M/Metallica/Album..."
+    default: %upper{%left{$albumartist,1}}/$albumartist/$album%aunique{}/$track $title
+    singleton: Non-Album/$artist/$title
+    comp: Compilations/$album%aunique{}/$track $title
+    albumtype_soundtrack: Soundtracks/$album/$track $title
+
+# ----------------------------------------------------------------------------
+# Matching & Taggers
+# ----------------------------------------------------------------------------
+match:
+    strong_rec_thresh: 0.10
+    max_rec:
+        missing_tracks: medium
+        unmatched_tracks: medium
+    distance_weights:
+        source: 2.0
+        artist: 3.0
+        album: 3.0
+        media: 1.0
+        medium: 0.5
+        year: 1.0
+        country: 0.5
+        label: 0.5
+    preferred:
+        countries: ['US', 'GB|UK', 'DE']
+        media: ['CD', 'Digital Media|File', 'Vinyl']
+        original_year: yes
+
+musicbrainz:
+    searchlimit: 10
+    extra_tags: [year, catalognum, country, media, label]
+    # User/Pass for mbcollection are in secrets.yaml
+
+discogs:
+    source_weight: 0.5
+    index_tracks: yes
+
+beetcamp:
+    art: yes               # Download art from Bandcamp
+    sync_art: yes          # If art exists but is smaller, download better version
+    id3v23: yes            # Compatibility for older players
+    # source_weight: 0.5   # Optional: Prioritize Bandcamp over MB (Default: 0.0)
+
+# ----------------------------------------------------------------------------
+# Web Interface
+# ----------------------------------------------------------------------------
+web:
+    host: 0.0.0.0
+    port: 8337
+    cors: '*'
+
+# ----------------------------------------------------------------------------
+# Plugin Configuration
+# ----------------------------------------------------------------------------
+
+# MusicBrainz Collection (Updates your online profile)
+mbcollection:
+    auto: yes             # Update collection automatically during import
+    collection:           # Optional: Specify a specific collection ID if you have multiple
+    remove: yes           # Remove albums from collection if deleted from library
+
+filetote:
+    extensions: .cue .log .pdf .jpg .jpeg .png .txt .nfo
+    print_ignored: yes
+    patterns:
+        artwork:
+            - '[sS]cans/'
+            - '[aA]rtwork/'
+
+fetchart:
+    auto: yes
+    cautious: yes
+    cover_names: cover front art album folder
+    sources: filesystem coverartarchive discogs albumart
+    minwidth: 500
+    maxwidth: 1000
+    enforce_ratio: yes
+    store_source: yes  # 
+
+replaygain:
+    backend: ffmpeg
+    overwrite: yes
+    targetlevel: 89
+
+lastgenre:
+    auto: yes
+    source: album
+    count: 2
+    separator: ', '
+    canonical: yes
+
+lyrics:
+    auto: yes
+    sources: genius, musixmatch, google
+
+permissions:
+    file: 644
+    dir: 755
+
+scrub:
+    auto: yes
+
+replace:
+    '[\\/]': _
+    '^\.': _
+    '[\x00-\x1f]': _
+    '[<>:"\?\*\|]': _
+    '\.$': _
+    '\s+$': ''
+    '^\s+': ''

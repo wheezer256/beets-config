@@ -1,0 +1,5 @@
+secrets.yaml
+local.yaml
+library.db
+beets.log
+state.pickle
