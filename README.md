@@ -62,16 +62,18 @@ Run the import with the `-W` (no write) flag. This identifies the music, moves i
 
 ```bash
 beet import -W /path/to/incoming/music
+```
 
 ### Step 2: "Time-Travel" Tag Writing
 
 To update the internal tags (ID3/FLAC) while restoring the old timestamp, run this script on your library folder:
 
 # Navigate to your library
-cd ~/Music
+```cd ~/Music
+```
 
 # Run the loop
-find . -type f \( -name "*.mp3" -o -name "*.flac" -o -name "*.m4a" \) | while read filename; do
+```find . -type f \( -name "*.mp3" -o -name "*.flac" -o -name "*.m4a" \) | while read filename; do
     # 1. Save timestamp
     touch -r "$filename" "$filename.bak_time"
 
@@ -85,4 +87,4 @@ find . -type f \( -name "*.mp3" -o -name "*.flac" -o -name "*.m4a" \) | while re
     rm "$filename.bak_time"
     echo "Updated tags & restored time: $filename"
 done
-
+```
