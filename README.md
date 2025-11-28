@@ -69,7 +69,8 @@ beet import -W /path/to/incoming/music
 To update the internal tags (ID3/FLAC) while restoring the old timestamp, run this script on your library folder:
 
 # Navigate to your library
-```cd ~/Music
+```bash
+cd ~/Music
 ```
 
 # Run the loop
