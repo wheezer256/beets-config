@@ -12,8 +12,8 @@ include:
 # ----------------------------------------------------------------------------
 import:
     write: yes
-    copy: yes
-    move: no
+    copy: no
+    move: yes
     resume: ask
     incremental: yes
     quiet_fallback: skip
@@ -30,6 +30,24 @@ paths:
     singleton: Non-Album/$artist/$title
     comp: Compilations/$album%aunique{}/$track $title
     albumtype_soundtrack: Soundtracks/$album/$track $title
+
+# ----------------------------------------------------------------------------
+# Filename Sanitization (Aggressive)
+# ----------------------------------------------------------------------------
+# 1. First, we use the 'asciify_paths' option to force closest-match ASCII.
+asciify_paths: yes
+
+# 2. Then, we use the replace block for specific cleanup.
+replace:
+    '[\\/]': _               # Replace path separators
+    '^\.': _                 # Replace leading dots (hidden files)
+    '[\x00-\x1f]': _         # Replace control characters
+    '[<>:"\?\*\|]': _        # Replace Windows reserved chars
+    '[™©®]': _               # Explicitly kill trademark/copyright symbols
+    '\.$': _                 # Replace trailing dots
+    '\s+$': ''               # Strip trailing whitespace
+    '^\s+': ''               # Strip leading whitespace
+    '&': and                 # Optional: Replace ampersand with 'and' for safety
 
 # ----------------------------------------------------------------------------
 # Matching & Taggers
