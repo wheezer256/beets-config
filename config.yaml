@@ -18,7 +18,17 @@ import:
     incremental: yes
     quiet_fallback: skip
     timid: no
-    # Log path is in local.yaml
+    clutter:
+      - "*.[mM]3[uU]"        # .m3u, .M3U
+      - "*.[mM]3[uU]8"       # .m3u8, .M3U8
+      - ".[dD][sS]_[sS][tT][oO][rR][eE]"  # .DS_Store
+      - "[tT][hH][uU][mM][bB][sS].[dD][bB]" # Thumbs.db
+      - "*.[jJ][pP][gG]"     # .jpg, .JPG
+      - "*.[pP][nN][gG]"     # .png, .PNG (Added this just in case)
+      - "*.[tT][xX][tT]"     # .txt, .TXT
+      - "*.[pP][dD][fF]"     # .pdf, .PDF
+      - "*.[lL][oO][gG]"     # .log, .LOG
+      - "*.[cC][uU][eE]"     # .cue, .CUE    # Log path is in local.yaml
 
 # ----------------------------------------------------------------------------
 # Path Structure (A-Z folders without plugin)
@@ -153,3 +163,35 @@ replace:
     '\.$': _
     '\s+$': ''
     '^\s+': ''
+
+# ----------------------------------------------------------------------------
+# Smart Playlists (Roon Compatible)
+# ----------------------------------------------------------------------------
+smartplaylist:
+    # 1. Where to save the m3u files (Must be inside your Roon watched folder)
+    playlist_dir: /home/wheezer/music 
+    
+    # 2. Force relative paths (Crucial for Windows/Roon compatibility)
+    relative_to: /home/wheezer/music
+    
+    # 3. Use URL encoding? (Usually 'no' is safer for local files)
+    urlencode: no
+    
+    # 4. The Playlists
+    playlists:
+        - name: New_Imports.m3u
+          query: 'added:-1d'   # Files imported in the last 24 hours
+          
+        - name: Last_Month.m3u
+          query: 'added:-30d'  # Files imported in the last 30 days
+          
+        - name: 1990s_Music.m3u
+          query: 'year:1990..1999'
+
+# ----------------------------------------------------------------------------
+# Featured Artists (Keeps Artist field clean)
+# ----------------------------------------------------------------------------
+ftintitle:
+    auto: yes
+    drop: no       # Do not delete the featured artist, just move them
+    format: (feat. {0})

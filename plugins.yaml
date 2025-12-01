@@ -1,15 +1,17 @@
 plugins:
   - badfiles
   - bandcamp
+  - completion
   - chroma
   - convert
   - discogs
   - duplicates
   - edit
-  - embedart
-  - fetchart
+#  - embedart
+#  - fetchart
   - filetote      # pip install beets-filetote
-  - fromfilename
+  - ftintitle
+#  - fromfilename
   - hook
   - info
   - lastgenre
@@ -20,5 +22,6 @@ plugins:
   - permissions
   - replaygain
   - scrub
+  - smartplaylist
   - unimported
   - web
